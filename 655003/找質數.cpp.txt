@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+using namespace std;
+
+int main() {
+	vector<int> numlong;
+	vector<int> rcdprmnum;
+	rcdprmnum.clear();
+
+	bool primenumbercheck = true;
+
+
+	int primenumber;
+	int times = 0;
+
+	string number;
+	cin >> number;
+	
+	for (int i = 0; i < 10; i++) {
+		numlong.push_back(number[i] - '0');
+	}
+
+	for (int i = 0; i <= numlong.size(); i++) {
+		primenumber = numlong[i];
+
+		for (int j = 2; j <= int(sqrt(primenumber)); j++) {
+			if (primenumber % j == 0) {
+				primenumbercheck = false;
+			}
+		}
+
+		if (primenumber == 1) {
+			primenumbercheck = false;
+		}
+
+		for (times = 1; primenumbercheck != true; times++) {
+			if (numlong[i + times] != 0) {	
+				primenumber = (primenumber * 10) + numlong[i + times];
+			} else {
+				primenumber *= 10;
+			}
+
+			primenumbercheck = true;
+
+			for (int j = 2; j <= int(sqrt(primenumber)); j++) {
+				if (primenumber % j == 0) {
+					primenumbercheck = false;
+				}
+			}
+
+			if (primenumber == 1) {
+				primenumbercheck = false;
+			}
+		}
+		
+		i += times - 1;
+
+		rcdprmnum.push_back(primenumber);
+		
+		primenumber = 0;
+	}
+	
+	rcdprmnum.pop_back();
+
+	cout << rcdprmnum.size() << endl;
+
+	for (auto n : rcdprmnum) {
+		cout << n << endl;
+	}
+}
