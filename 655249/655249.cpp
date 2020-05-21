@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 int main() {
@@ -10,14 +11,14 @@ int main() {
         input[i] -= '0';
     }
 
-    vector<int> primeNum;
+    vector<long> primeNum;
     int answer = 0;
     long long num = 0;
     bool prime;
     for (int i = 0; i < 10; i++) {
         num += input[i];
         prime = true;
-        for (int j = 2; j < num; j++) {
+        for (int j = 2; j <= sqrt(num); j++) {
             if (num % j == 0) {
                 prime = false; 
             }
