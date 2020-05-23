@@ -3,69 +3,65 @@
 #include <math.h>
 using namespace std;
 
-int main() {
-	vector<int> numlong;
-	vector<int> rcdprmnum;
-	rcdprmnum.clear();
+bool check(long num);
 
-	bool primenumbercheck = true;
+int main(void) {
+	while (cin) {
+		vector<int> numsprt;
+		vector<long> rcdnum;
 
+		long primenumber;
+		
+		string number;
+		cin >> number;
 
-	int primenumber;
-	int times = 0;
-
-	string number;
-	cin >> number;
-	
-	for (int i = 0; i < 10; i++) {
-		numlong.push_back(number[i] - '0');
-	}
-
-	for (int i = 0; i <= numlong.size(); i++) {
-		primenumber = numlong[i];
-
-		for (int j = 2; j <= int(sqrt(primenumber)); j++) {
-			if (primenumber % j == 0) {
-				primenumbercheck = false;
-			}
+		for (int i = 0; i < 10; i++) {
+			numsprt.push_back(number[i] - '0');
 		}
 
-		if (primenumber == 1) {
-			primenumbercheck = false;
-		}
+		for (int numleft = 0; numleft < 10; numleft++) {
+			bool limit = true;
 
-		for (times = 1; primenumbercheck != true; times++) {
-			if (numlong[i + times] != 0) {	
-				primenumber = (primenumber * 10) + numlong[i + times];
-			} else {
-				primenumber *= 10;
-			}
+			primenumber = numsprt[numleft];
 
-			primenumbercheck = true;
+			bool numcheck = check(primenumber);
 
-			for (int j = 2; j <= int(sqrt(primenumber)); j++) {
-				if (primenumber % j == 0) {
-					primenumbercheck = false;
+			for (;numcheck == false; numleft++) {
+				if (numleft < 9) {	
+					primenumber = (primenumber * 10) + numsprt[numleft + 1];	
+				} else {
+					limit = false;
+
+					break;
 				}
+				numcheck = check(primenumber);
 			}
 
-			if (primenumber == 1) {
-				primenumbercheck = false;
-			}
+			if (limit == false) break;
+
+			rcdnum.push_back(primenumber);
 		}
-		
-		i += times - 1;
 
-		rcdprmnum.push_back(primenumber);
-		
-		primenumber = 0;
+		cout << rcdnum.size() << endl;
+
+		for (auto k : rcdnum) {
+			cout << k << endl;
+		}
 	}
+}
+
+bool check(long num) {
+	bool n = true;
 	
-	rcdprmnum.pop_back();
-
-	cout << rcdprmnum.size() << endl;
-
-	for (auto n : rcdprmnum) {
-		cout << n << endl;
+	for (int j = 2; j < sqrt(num); j++) {
+		if (num % j == 0) {
+			n = false;
+		}
 	}
+
+	if (num == 0 || num == 1 || (int(sqrt(num)) == sqrt(num))) {
+		n = false;
+	}
+
+	return n;
 }
