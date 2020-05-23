@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+using namespace std;
+
+bool check(long num);
+
+int main(void) {
+	while (cin) {
+		vector<int> numsprt;
+		vector<long> rcdnum;
+
+		long primenumber;
+		
+		string number;
+		cin >> number;
+
+		for (int i = 0; i < 10; i++) {
+			numsprt.push_back(number[i] - '0');
+		}
+
+		for (int numleft = 0; numleft < 10; numleft++) {
+			bool limit = true;
+
+			primenumber = numsprt[numleft];
+
+			bool numcheck = check(primenumber);
+
+			for (;numcheck == false; numleft++) {
+				if (numleft < 9) {	
+					primenumber = (primenumber * 10) + numsprt[numleft + 1];	
+				} else {
+					limit = false;
+
+					break;
+				}
+				numcheck = check(primenumber);
+			}
+
+			if (limit == false) break;
+
+			rcdnum.push_back(primenumber);
+		}
+
+		cout << rcdnum.size() << endl;
+
+		for (auto k : rcdnum) {
+			cout << k << endl;
+		}
+	}
+}
+
+bool check(long num) {
+	bool n = true;
+	
+	for (int j = 2; j < sqrt(num); j++) {
+		if (num % j == 0) {
+			n = false;
+		}
+	}
+
+	if (num == 0 || num == 1 || (int(sqrt(num)) == sqrt(num))) {
+		n = false;
+	}
+
+	return n;
+}
